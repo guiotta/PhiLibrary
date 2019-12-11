@@ -5,10 +5,17 @@ spring:
     username: root
     password: root
   jpa:
-    hibernate.ddl-auto: none
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
     generate-ddl: false
     show-sql: true
   flyway:
     user: root
     password: root
     schemas: phi_library
+  queries:
+    users-query: select email, password, active from User where email=?
+    roles-query: select u.email, r.name from User u inner join Role r on(u.id_role=r.id) where u.email=?

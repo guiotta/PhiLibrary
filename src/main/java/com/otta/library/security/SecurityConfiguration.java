@@ -1,6 +1,9 @@
 package com.otta.library.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +32,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
     private SavedRequestAuthenticationSuccessHandler requestSuccessHandler;
+    @Autowired
+    private DataSource dataSource;
+
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
+
+    @Value("${spring.queries.roles-query}")
+    private String rolesQuery;
 
     private SimpleUrlAuthenticationFailureHandler requestFailureHandler = new SimpleUrlAuthenticationFailureHandler();
 
@@ -39,10 +50,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-            .withUser("admin").password(encoder().encode("adminPass")).roles("ADMIN")
-            .and()
-            .withUser("user").password(encoder().encode("userPass")).roles("USER");
+        auth.jdbcAuthentication()
+            .usersByUsernameQuery(usersQuery)
+            .authoritiesByUsernameQuery(rolesQuery)
+            .dataSource(dataSource)
+            .passwordEncoder(encoder());
     }
 
     @Override
@@ -55,11 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/csrfAttacker*").permitAll()
-            .antMatchers("/api/customer/**").permitAll()
+            .antMatchers("/login*").permitAll()
             .antMatchers("/api/user/**").authenticated()
-            .antMatchers("/api/async/**").permitAll()
-            .antMatchers("/api/admin/**").hasRole("ADMIN")
             .and()
             .formLogin()
             .successHandler(requestSuccessHandler)
@@ -74,5 +83,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
