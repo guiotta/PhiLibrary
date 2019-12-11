@@ -1,0 +1,1 @@
+CREATE TABLE test (blob_col BLOB, INDEX(blob_col(10)));
