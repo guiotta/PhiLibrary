@@ -1,24 +1,36 @@
 package com.otta.library.user.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
+@Table(name = "User")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "email")
     private String email;
+    @Column(name = "password")
+    private String password;
     @Column(name = "active")
     private int active;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_role")
+    private Role role;
 
     @Version
     @Column(name = "version")
@@ -28,11 +40,12 @@ public class User {
         // Do nothing
     }
 
-    public User(Long id, String name, String email, int active) {
-        this.id = id;
+    public User(String name, String email, String password, int active, Role role) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.active = active;
+        this.role = role;
     }
 
     public Long getId() {
@@ -59,12 +72,28 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public int getActive() {
         return active;
     }
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public int getVersion() {
@@ -75,4 +104,24 @@ public class User {
         this.version = version;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(active, email, id, name, password, role, version);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User other = (User) obj;
+        return active == other.active && Objects.equals(email, other.email) && Objects.equals(id, other.id)
+                && Objects.equals(name, other.name) && Objects.equals(password, other.password)
+                && Objects.equals(role, other.role) && version == other.version;
+    }
+
+   
 }
