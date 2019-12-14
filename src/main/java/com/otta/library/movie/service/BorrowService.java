@@ -82,7 +82,7 @@ public class BorrowService {
     @Transactional(readOnly = true)
     public Page<RentedMovieShow> listRentsByLoggedUser(int currentPage) {
         User user = loggedUserFactory.get()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new IllegalStateException("Could not find logged User."));
         org.springframework.data.domain.Page<Unit> unitsPage = unitRepository
                 .findRentedUnitsByUser(user, PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
 
