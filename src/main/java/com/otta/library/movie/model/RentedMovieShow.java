@@ -6,15 +6,18 @@ public class RentedMovieShow {
     private long movieId;
     private String movieName;
     private long unitId;
+    private long borrowId;
 
     public RentedMovieShow() {
         // Do nothing.
     }
 
-    public RentedMovieShow(long movieId, String movieName, long unitId) {
+    public RentedMovieShow(long movieId, String movieName, long unitId, long borrowId) {
+        super();
         this.movieId = movieId;
         this.movieName = movieName;
         this.unitId = unitId;
+        this.borrowId = borrowId;
     }
 
     public long getMovieId() {
@@ -41,9 +44,17 @@ public class RentedMovieShow {
         this.unitId = unitId;
     }
 
+    public long getBorrowId() {
+        return borrowId;
+    }
+
+    public void setBorrowId(long borrowId) {
+        this.borrowId = borrowId;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(movieId, movieName, unitId);
+        return Objects.hash(borrowId, movieId, movieName, unitId);
     }
 
     @Override
@@ -55,7 +66,7 @@ public class RentedMovieShow {
             return false;
         }
         RentedMovieShow other = (RentedMovieShow) obj;
-        return movieId == other.movieId && Objects.equals(movieName, other.movieName) && unitId == other.unitId;
+        return borrowId == other.borrowId && movieId == other.movieId && Objects.equals(movieName, other.movieName)
+                && unitId == other.unitId;
     }
-
 }
