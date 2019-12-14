@@ -2,8 +2,12 @@ package com.otta.library.movie.service;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,8 @@ import com.otta.library.movie.entity.Movie;
 import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.model.BorrowReturnInformation;
 import com.otta.library.movie.model.MovieBorrow;
+import com.otta.library.movie.model.RentedMovieShow;
+import com.otta.library.movie.model.RentedMovieShowPage;
 import com.otta.library.movie.repository.MovieRepository;
 import com.otta.library.movie.repository.UnitRepository;
 import com.otta.library.user.entity.User;
@@ -21,6 +27,9 @@ import com.otta.library.user.repository.UserRepository;
 
 @Service
 public class BorrowService {
+    private static final int DEFAULT_ELEMENTS_QUANTITY = 10;
+    private static final int CHANGE_PAGE_OFFSET = 1;
+
     private final UserRepository userRepository;
     private final UnitRepository unitRepository;
     private final MovieRepository movieRepository;
@@ -67,5 +76,21 @@ public class BorrowService {
         unitRepository.save(unitWithBorrowToReturn);
 
         return borrowReturnInformation;
+    }
+
+    public RentedMovieShowPage listRentsByLoggedUser(int currentPage) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName());
+        Page<Unit> unitsPage = unitRepository.findRentedUnitsByUser(user, PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
+
+        String next = unitsPage.hasNext() ? "http://localhost:8080/api/movie/borrow/" + (currentPage + CHANGE_PAGE_OFFSET) : null;
+        String previous = unitsPage.hasPrevious() ? "http://localhost:8080/api/movie/borrow/" + (currentPage - CHANGE_PAGE_OFFSET) : null;
+        int totalPages = unitsPage.getTotalPages();
+        int elementsInPage = unitsPage.getNumberOfElements();
+        List<RentedMovieShow> rentedUnitsToShow = unitsPage.stream()
+                .map(unit -> new RentedMovieShow(unit.getMovie().getId(), unit.getMovie().getName(), unit.getId()))
+                .collect(Collectors.toList());
+
+        return new RentedMovieShowPage(currentPage, totalPages, elementsInPage, rentedUnitsToShow, next, previous);
     }
 }
