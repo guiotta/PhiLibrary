@@ -14,10 +14,11 @@ import com.otta.library.movie.model.BorrowReturnInformation;
 import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.MovieInformation;
 import com.otta.library.movie.model.MovieSearchInformation;
-import com.otta.library.movie.model.pagination.MovieShowPage;
+import com.otta.library.movie.model.MovieShow;
 import com.otta.library.movie.model.pagination.RentedMovieShowPage;
 import com.otta.library.movie.service.BorrowService;
 import com.otta.library.movie.service.MovieService;
+import com.otta.library.pagination.Page;
 
 @RestController
 @RequestMapping("/api/movie")
@@ -32,18 +33,24 @@ public class MovieController {
     }
 
     @GetMapping(produces = "application/json")
-    public @ResponseBody ResponseEntity<MovieShowPage> returnMovies() {
+    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies() {
         return ResponseEntity.ok(movieService.listMovies(0));
     }
 
     @GetMapping(path = "/{page}", produces = "application/json")
-    public @ResponseBody ResponseEntity<MovieShowPage> returnMovies(@PathVariable(name = "page") int currentPage) {
+    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@PathVariable(name = "page") int currentPage) {
         return ResponseEntity.ok(movieService.listMovies(currentPage));
     }
 
     @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
-    public @ResponseBody ResponseEntity<MovieShowPage> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation) {
+    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation) {
         return ResponseEntity.ok(movieService.listMovies(movieSearchInformation, 0));
+    }
+
+    @PostMapping(path = "/search/{page}", consumes = "application/json", produces = "application/json")
+    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation,
+            @PathVariable(name = "page") int currentPage) {
+        return ResponseEntity.ok(movieService.listMovies(movieSearchInformation, currentPage));
     }
 
     @PostMapping(consumes = "application/json")
