@@ -12,6 +12,7 @@ import com.otta.library.movie.model.MovieSearchInformation;
 import com.otta.library.movie.model.MovieShow;
 import com.otta.library.movie.repository.MovieRepository;
 import com.otta.library.pagination.Page;
+import com.otta.library.pagination.model.PageEndpoint;
 
 @Service
 public class MovieService {
@@ -36,19 +37,19 @@ public class MovieService {
         return movieInformation;
     }
 
-    public Page<MovieShow> listMovies(int currentPage) {
+    public Page<MovieShow> listMovies(PageEndpoint pageEndpoint, int currentPage) {
         org.springframework.data.domain.Page<Movie> moviesPage =
                 movieRepository.findAll(PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
 
-        return movieShowPageFactory.create(moviesPage, currentPage);
+        return movieShowPageFactory.create(moviesPage, pageEndpoint, currentPage);
     }
 
-    public Page<MovieShow> listMovies(MovieSearchInformation movieSearchInformation, int currentPage) {
+    public Page<MovieShow> listMovies(PageEndpoint pageEndpoint, MovieSearchInformation movieSearchInformation, int currentPage) {
         org.springframework.data.domain.Page<Movie> moviesPage =
                 movieRepository.findByName(movieSearchInformation.getMovieName(),
                         PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
 
-        return movieShowPageFactory.create(moviesPage, currentPage);
+        return movieShowPageFactory.create(moviesPage, pageEndpoint, currentPage);
     }
 
 }

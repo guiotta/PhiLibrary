@@ -19,6 +19,7 @@ import com.otta.library.movie.repository.UnitRepository;
 import com.otta.library.movie.update.UnitBorrowReturnEndSetter;
 import com.otta.library.movie.validator.UserValidator;
 import com.otta.library.pagination.Page;
+import com.otta.library.pagination.model.PageEndpoint;
 import com.otta.library.user.entity.User;
 import com.otta.library.user.factory.LoggedUserFactory;
 
@@ -82,12 +83,12 @@ public class BorrowService {
     }
 
     @Transactional(readOnly = true)
-    public Page<RentedMovieShow> listRentsByLoggedUser(int currentPage) {
+    public Page<RentedMovieShow> listRentsByLoggedUser(PageEndpoint pageEndpoint, int currentPage) {
         User user = loggedUserFactory.get()
                 .orElseThrow(() -> new IllegalStateException("Could not find logged User."));
         org.springframework.data.domain.Page<Unit> unitsPage = unitRepository
                 .findRentedUnitsByUser(user, PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
 
-        return rentedMovieShowPageFactory.create(unitsPage, currentPage);
+        return rentedMovieShowPageFactory.create(unitsPage, pageEndpoint, currentPage);
     }
 }

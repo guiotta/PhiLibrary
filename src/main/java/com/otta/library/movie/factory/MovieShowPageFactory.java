@@ -12,6 +12,7 @@ import com.otta.library.movie.model.MovieShow;
 import com.otta.library.movie.model.pagination.MovieShowPage;
 import com.otta.library.pagination.Page;
 import com.otta.library.pagination.factory.PaginationStepsFactory;
+import com.otta.library.pagination.model.PageEndpoint;
 import com.otta.library.pagination.model.PaginationSteps;
 
 /**
@@ -30,8 +31,9 @@ public class MovieShowPageFactory {
         this.paginationStepsFactory = paginationStepsFactory;
     }
 
-    public Page<MovieShow> create(org.springframework.data.domain.Page<Movie> moviesPage, int currentPage) {
-        PaginationSteps paginationSteps = paginationStepsFactory.create(currentPage,
+    public Page<MovieShow> create(org.springframework.data.domain.Page<Movie> moviesPage, PageEndpoint pageEndpoint,
+            int currentPage) {
+        PaginationSteps paginationSteps = paginationStepsFactory.create(pageEndpoint, currentPage,
                 moviesPage.hasPrevious(),moviesPage.hasNext());
         Collection<MovieShow> movieShowCollection = moviesPage.stream()
                 .map(movie -> movieShowMapper.map(movie))

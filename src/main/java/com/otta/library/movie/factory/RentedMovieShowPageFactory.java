@@ -12,6 +12,7 @@ import com.otta.library.movie.model.RentedMovieShow;
 import com.otta.library.movie.model.pagination.RentedMovieShowPage;
 import com.otta.library.pagination.Page;
 import com.otta.library.pagination.factory.PaginationStepsFactory;
+import com.otta.library.pagination.model.PageEndpoint;
 import com.otta.library.pagination.model.PaginationSteps;
 
 /**
@@ -31,8 +32,9 @@ public class RentedMovieShowPageFactory {
         this.rentedMovieShowMapper = rentedMovieShowMapper;
     }
 
-    public Page<RentedMovieShow> create(org.springframework.data.domain.Page<Unit> unitPage, int currentPage) {
-        PaginationSteps paginationSteps = paginationStepsFactory.create(currentPage, unitPage.hasPrevious(),
+    public Page<RentedMovieShow> create(org.springframework.data.domain.Page<Unit> unitPage, PageEndpoint pageEndpoint,
+            int currentPage) {
+        PaginationSteps paginationSteps = paginationStepsFactory.create(pageEndpoint, currentPage, unitPage.hasPrevious(),
                 unitPage.hasNext());
         List<RentedMovieShow> rentedUnitsToShow = unitPage.stream().map(unit -> rentedMovieShowMapper.map(unit))
                 .collect(Collectors.toList());

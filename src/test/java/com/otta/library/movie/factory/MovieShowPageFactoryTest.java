@@ -20,6 +20,7 @@ import com.otta.library.movie.mapper.MovieShowMapper;
 import com.otta.library.movie.model.MovieShow;
 import com.otta.library.pagination.Page;
 import com.otta.library.pagination.factory.PaginationStepsFactory;
+import com.otta.library.pagination.model.PageEndpoint;
 import com.otta.library.pagination.model.PaginationSteps;
 
 /**
@@ -54,6 +55,8 @@ public class MovieShowPageFactoryTest {
     @Mock
     private PaginationSteps paginationSteps;
 
+    private PageEndpoint pageEndpoint = PageEndpoint.MOVIE;
+
     @BeforeEach
     protected void setUp() {
         given(page.stream()).willReturn(Stream.of(movie));
@@ -62,7 +65,7 @@ public class MovieShowPageFactoryTest {
         given(page.hasNext()).willReturn(HAS_NEXT);
         given(page.getTotalPages()).willReturn(TOTAL_PAGES);
         given(page.getNumberOfElements()).willReturn(NUMBER_OF_ELEMENTS);
-        given(paginationStepsFactory.create(CURRENT_PAGE, HAS_PREVIOUS, HAS_NEXT)).willReturn(paginationSteps);
+        given(paginationStepsFactory.create(pageEndpoint, CURRENT_PAGE, HAS_PREVIOUS, HAS_NEXT)).willReturn(paginationSteps);
         given(paginationSteps.getPrevious()).willReturn(PREVIOUS);
         given(paginationSteps.getNext()).willReturn(NEXT);
     }
@@ -71,7 +74,7 @@ public class MovieShowPageFactoryTest {
     public void shouldCorrectlyCreateWithPropertyCurrentPage() {
         // given
         // when
-        Page<MovieShow> actualValue = movieShowPageFactory.create(page, CURRENT_PAGE);
+        Page<MovieShow> actualValue = movieShowPageFactory.create(page, pageEndpoint, CURRENT_PAGE);
         // then
         assertEquals(CURRENT_PAGE, actualValue.getCurrentPage());
     }
@@ -80,7 +83,7 @@ public class MovieShowPageFactoryTest {
     public void shouldCorrectlyCreateWithPropertyTotalPages() {
         // given
         // when
-        Page<MovieShow> actualValue = movieShowPageFactory.create(page, CURRENT_PAGE);
+        Page<MovieShow> actualValue = movieShowPageFactory.create(page, pageEndpoint, CURRENT_PAGE);
         // then
         assertEquals(TOTAL_PAGES, actualValue.getTotalPages());
     }
@@ -89,7 +92,7 @@ public class MovieShowPageFactoryTest {
     public void shouldCorrectlyCreateWithPropertyElementsInPage() {
         // given
         // when
-        Page<MovieShow> actualValue = movieShowPageFactory.create(page, CURRENT_PAGE);
+        Page<MovieShow> actualValue = movieShowPageFactory.create(page, pageEndpoint, CURRENT_PAGE);
         // then
         assertEquals(NUMBER_OF_ELEMENTS, actualValue.getElementsInPage());
     }
@@ -98,7 +101,7 @@ public class MovieShowPageFactoryTest {
     public void shouldCorrectlyCreateWithPropertyPrevious() {
         // given
         // when
-        Page<MovieShow> actualValue = movieShowPageFactory.create(page, CURRENT_PAGE);
+        Page<MovieShow> actualValue = movieShowPageFactory.create(page, pageEndpoint, CURRENT_PAGE);
         // then
         assertEquals(PREVIOUS, actualValue.getPrevious());
     }
@@ -107,7 +110,7 @@ public class MovieShowPageFactoryTest {
     public void shouldCorrectlyCreateWithPropertyNext() {
         // given
         // when
-        Page<MovieShow> actualValue = movieShowPageFactory.create(page, CURRENT_PAGE);
+        Page<MovieShow> actualValue = movieShowPageFactory.create(page, pageEndpoint, CURRENT_PAGE);
         // then
         assertEquals(NEXT, actualValue.getNext());
     }
@@ -116,7 +119,7 @@ public class MovieShowPageFactoryTest {
     public void shouldCorrectlyCreateWithPropertyContent() {
         // given
         // when
-        Page<MovieShow> actualValue = movieShowPageFactory.create(page, CURRENT_PAGE);
+        Page<MovieShow> actualValue = movieShowPageFactory.create(page, pageEndpoint, CURRENT_PAGE);
         // then
         assertThat(actualValue.getContent(), contains(movieShow));
     }
