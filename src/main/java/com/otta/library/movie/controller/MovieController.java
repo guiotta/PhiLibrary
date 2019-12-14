@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.otta.library.movie.model.BorrowReturnInformation;
 import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.MovieInformation;
+import com.otta.library.movie.model.MovieSearchInformation;
 import com.otta.library.movie.model.pagination.MovieShowPage;
 import com.otta.library.movie.model.pagination.RentedMovieShowPage;
 import com.otta.library.movie.service.BorrowService;
@@ -33,6 +34,16 @@ public class MovieController {
     @GetMapping(produces = "application/json")
     public @ResponseBody ResponseEntity<MovieShowPage> returnMovies() {
         return ResponseEntity.ok(movieService.listMovies(0));
+    }
+
+    @GetMapping(path = "/{page}", produces = "application/json")
+    public @ResponseBody ResponseEntity<MovieShowPage> returnMovies(@PathVariable(name = "page") int currentPage) {
+        return ResponseEntity.ok(movieService.listMovies(currentPage));
+    }
+
+    @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
+    public @ResponseBody ResponseEntity<MovieShowPage> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation) {
+        return ResponseEntity.ok(movieService.listMovies(movieSearchInformation, 0));
     }
 
     @PostMapping(consumes = "application/json")

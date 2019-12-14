@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MovieBorrow {
     private long idMovie;
-    
+
     public MovieBorrow() {
         // Do nothing.
     }
