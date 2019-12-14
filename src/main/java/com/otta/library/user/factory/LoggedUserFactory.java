@@ -2,15 +2,20 @@ package com.otta.library.user.factory;
 
 import java.util.Optional;
 
-import org.assertj.core.util.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.otta.library.user.entity.User;
 import com.otta.library.user.repository.UserRepository;
 
+/**
+ * Componente para obter o {@link User} representando o usuário logado no sistema.
+ * @author Guilherme
+ *
+ */
 @Component
 public class LoggedUserFactory {
     private final UserRepository userRepository;

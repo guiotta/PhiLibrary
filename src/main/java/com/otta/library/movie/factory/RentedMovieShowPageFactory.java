@@ -14,6 +14,11 @@ import com.otta.library.pagination.Page;
 import com.otta.library.pagination.factory.PaginationStepsFactory;
 import com.otta.library.pagination.model.PaginationSteps;
 
+/**
+ * Componente para construir um {@link Page}<{@link RentedMovieShow}>.
+ * @author Guilherme
+ *
+ */
 @Component
 public class RentedMovieShowPageFactory {
     private final PaginationStepsFactory paginationStepsFactory;

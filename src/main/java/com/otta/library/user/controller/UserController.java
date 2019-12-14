@@ -1,4 +1,4 @@
-package com.otta.library.user;
+package com.otta.library.user.controller;
 
 import java.util.Collection;
 

@@ -10,6 +10,11 @@ import com.otta.library.movie.entity.Movie;
 import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.model.MovieInformation;
 
+/**
+ * Classe para mapear um {@link MovieInformation} em um {@link Movie}.
+ * @author Guilherme
+ *
+ */
 @Component
 public class MovieMapper {
 

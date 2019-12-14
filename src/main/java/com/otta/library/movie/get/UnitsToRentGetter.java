@@ -10,6 +10,11 @@ import com.otta.library.movie.entity.Movie;
 import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.repository.UnitRepository;
 
+/**
+ * Componente para recuperar sa {@link Unit Units} de um {@link Movie} que estão livres para ser alugadas.
+ * @author Guilherme
+ *
+ */
 @Component
 public class UnitsToRentGetter {
     private final UnitRepository unitRepository;

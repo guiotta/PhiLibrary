@@ -52,13 +52,15 @@ public class BorrowService {
 
     @Transactional
     public MovieBorrow borrowMovie(MovieBorrow movieBorrow) {
-        Movie movie = movieRepository.findById(movieBorrow.getIdMovie()).orElseThrow(IllegalArgumentException::new);
+        Movie movie = movieRepository.findById(movieBorrow.getIdMovie())
+                .orElseThrow(() -> new IllegalArgumentException("Could not find Movie for ID "
+                        + movieBorrow.getIdMovie()));
         Unit unit = unitsToRentGetter.get(movie).stream()
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("Could not get Unit to Rent."));
 
         User user = loggedUserFactory.get()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new IllegalStateException("Could not find logged User."));
         unit.addBorrow(borrowFactory.create(user, unit.getId()));
 
         unitRepository.save(unit);

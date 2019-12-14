@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 import com.otta.library.movie.entity.Borrow;
 import com.otta.library.user.entity.User;
 
+/**
+ * Componente para construir um {@link Borrow}.
+ * @author Guilherme
+ *
+ */
 @Component
 public class BorrowFactory {
 

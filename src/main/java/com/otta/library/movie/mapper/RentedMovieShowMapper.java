@@ -7,6 +7,11 @@ import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.extractor.UnitBorrowIdExtractor;
 import com.otta.library.movie.model.RentedMovieShow;
 
+/**
+ * Componente para mapear uma {@link Unit} em um {@link RentedMovieShow}.
+ * @author Guilherme
+ *
+ */
 @Component
 public class RentedMovieShowMapper {
     private final UnitBorrowIdExtractor unitBorrowIdExtractor;
