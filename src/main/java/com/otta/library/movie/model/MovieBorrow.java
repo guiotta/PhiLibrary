@@ -3,27 +3,28 @@ package com.otta.library.movie.model;
 import java.util.Objects;
 
 public class MovieBorrow {
-    private long idUnit;
-
+    private long idMovie;
+    
     public MovieBorrow() {
         // Do nothing.
     }
 
-    public MovieBorrow(int idUnit) {
-        this.idUnit = idUnit;
+    public MovieBorrow(long idMovie) {
+        super();
+        this.idMovie = idMovie;
     }
 
-    public long getIdUnit() {
-        return idUnit;
+    public long getIdMovie() {
+        return idMovie;
     }
 
-    public void setIdUnit(long idUnit) {
-        this.idUnit = idUnit;
+    public void setIdMovie(long idMovie) {
+        this.idMovie = idMovie;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUnit);
+        return Objects.hash(idMovie);
     }
 
     @Override
@@ -35,6 +36,6 @@ public class MovieBorrow {
             return false;
         }
         MovieBorrow other = (MovieBorrow) obj;
-        return idUnit == other.idUnit;
+        return idMovie == other.idMovie;
     }
 }

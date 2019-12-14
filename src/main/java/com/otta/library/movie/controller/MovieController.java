@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.otta.library.movie.model.BorrowReturnInformation;
 import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.MovieInformation;
 import com.otta.library.movie.service.BorrowService;
@@ -33,5 +34,10 @@ public class MovieController {
     @PostMapping(path = "/borrow", consumes = "application/json")
     public @ResponseBody ResponseEntity<MovieBorrow> borrowMovie(@RequestBody MovieBorrow movieBorrow)  {
         return ResponseEntity.ok(borrowService.borrowMovie(movieBorrow));
+    }
+
+    @PostMapping(path = "/return", consumes = "application/json")
+    public @ResponseBody ResponseEntity<BorrowReturnInformation> returnBorrowMovie(@RequestBody BorrowReturnInformation borrowReturnInformation) {
+        return ResponseEntity.ok(borrowService.returnMovie(borrowReturnInformation));
     }
 }

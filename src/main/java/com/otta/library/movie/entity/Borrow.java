@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.otta.library.user.entity.User;
 
@@ -27,13 +26,8 @@ public class Borrow {
     private Calendar begin;
     @Column(name = "end")
     private Calendar end;
-
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "id_unit")
-    @Transient
-    private Unit unit;
     @Column(name = "id_unit")
-    public int idUnit = 1;
+    public long idUnit;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User user;
@@ -42,10 +36,10 @@ public class Borrow {
         // Do nothing.
     }
 
-    public Borrow(Calendar begin, Calendar end, Unit unit, User user) {
+    public Borrow(Calendar begin, Calendar end, long idUnit, User user) {
         this.begin = begin;
         this.end = end;
-        this.unit = unit;
+        this.idUnit = idUnit;
         this.user = user;
     }
 
@@ -73,12 +67,12 @@ public class Borrow {
         this.end = end;
     }
 
-    public Unit getUnit() {
-        return unit;
+    public long getIdUnit() {
+        return idUnit;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setIdUnit(long idUnit) {
+        this.idUnit = idUnit;
     }
 
     public User getUser() {
@@ -91,7 +85,7 @@ public class Borrow {
 
     @Override
     public int hashCode() {
-        return Objects.hash(begin, end, id, unit, user);
+        return Objects.hash(begin, end, id, idUnit, user);
     }
 
     @Override
@@ -104,6 +98,6 @@ public class Borrow {
         }
         Borrow other = (Borrow) obj;
         return Objects.equals(begin, other.begin) && Objects.equals(end, other.end) && Objects.equals(id, other.id)
-                && Objects.equals(unit, other.unit) && Objects.equals(user, other.user);
+                && idUnit == other.idUnit && Objects.equals(user, other.user);
     }
 }
