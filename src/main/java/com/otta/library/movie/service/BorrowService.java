@@ -19,7 +19,7 @@ import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.model.BorrowReturnInformation;
 import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.RentedMovieShow;
-import com.otta.library.movie.model.RentedMovieShowPage;
+import com.otta.library.movie.model.pagination.RentedMovieShowPage;
 import com.otta.library.movie.repository.MovieRepository;
 import com.otta.library.movie.repository.UnitRepository;
 import com.otta.library.user.entity.User;

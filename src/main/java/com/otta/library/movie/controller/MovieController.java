@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.otta.library.movie.model.BorrowReturnInformation;
 import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.MovieInformation;
-import com.otta.library.movie.model.MovieShowPage;
-import com.otta.library.movie.model.RentedMovieShowPage;
+import com.otta.library.movie.model.pagination.MovieShowPage;
+import com.otta.library.movie.model.pagination.RentedMovieShowPage;
 import com.otta.library.movie.service.BorrowService;
 import com.otta.library.movie.service.MovieService;
 
