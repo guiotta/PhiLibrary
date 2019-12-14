@@ -20,7 +20,7 @@ public class MovieShowPage implements Page<MovieShow> {
     }
 
     public MovieShowPage(long currentPage, long totalPages, long elementsInPage, Collection<MovieShow> content,
-            String next, String previous) {
+            String previous, String next) {
         this.currentPage = currentPage;
         this.totalPages = totalPages;
         this.elementsInPage = elementsInPage;
