@@ -1,10 +1,13 @@
-package com.otta.library.movie.model;
+package com.otta.library.movie.model.pagination;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-public class RentedMovieShowPage {
+import com.otta.library.movie.model.RentedMovieShow;
+import com.otta.library.pagination.Page;
+
+public class RentedMovieShowPage implements Page<RentedMovieShow> {
     private long currentPage;
     private long totalPages;
     private long elementsInPage;
@@ -26,6 +29,7 @@ public class RentedMovieShowPage {
         this.previous = previous;
     }
 
+    @Override
     public long getCurrentPage() {
         return currentPage;
     }
@@ -34,6 +38,7 @@ public class RentedMovieShowPage {
         this.currentPage = currentPage;
     }
 
+    @Override
     public long getTotalPages() {
         return totalPages;
     }
@@ -42,6 +47,7 @@ public class RentedMovieShowPage {
         this.totalPages = totalPages;
     }
 
+    @Override
     public long getElementsInPage() {
         return elementsInPage;
     }
@@ -50,6 +56,7 @@ public class RentedMovieShowPage {
         this.elementsInPage = elementsInPage;
     }
 
+    @Override
     public Collection<RentedMovieShow> getContent() {
         return content;
     }
@@ -58,6 +65,7 @@ public class RentedMovieShowPage {
         this.content = content;
     }
 
+    @Override
     public String getNext() {
         return next;
     }
@@ -66,6 +74,7 @@ public class RentedMovieShowPage {
         this.next = next;
     }
 
+    @Override
     public String getPrevious() {
         return previous;
     }

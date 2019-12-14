@@ -15,7 +15,7 @@ import com.otta.library.movie.entity.Movie;
 import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.model.MovieInformation;
 import com.otta.library.movie.model.MovieShow;
-import com.otta.library.movie.model.MovieShowPage;
+import com.otta.library.movie.model.pagination.MovieShowPage;
 import com.otta.library.movie.repository.MovieRepository;
 import com.otta.library.movie.repository.UnitRepository;
 
