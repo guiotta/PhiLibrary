@@ -18,7 +18,7 @@ CREATE TABLE `User` (
   `email` varchar(64) NOT NULL,
   `password` varchar(128) NOT NULL,
   `active` integer NOT NULL DEFAULT 1,
-  `version` integer(11) NOT NULL DEFAULT 1,
+  `version` integer(19) NOT NULL DEFAULT 0,
   `id_role` integer(11) NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -37,17 +37,17 @@ CREATE TABLE `Role` (
 );
 
 -- ---
--- Table 'Book'
+-- Table 'Movie'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `Book`;
+DROP TABLE IF EXISTS `Movie`;
         
-CREATE TABLE `Book` (
+CREATE TABLE `Movie` (
   `id` integer(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `author` varchar(11) NOT NULL,
-  `version` integer(11) NOT NULL DEFAULT 0,
+  `director` varchar(64) NOT NULL,
+  `version` integer(19) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 
@@ -60,8 +60,8 @@ DROP TABLE IF EXISTS `Unit`;
         
 CREATE TABLE `Unit` (
   `id` integer(11) NOT NULL AUTO_INCREMENT,
-  `version` integer(11) NOT NULL DEFAULT 1,
-  `id_book` integer(11) NOT NULL,
+  `version` integer(19) NOT NULL DEFAULT 0,
+  `id_movie` integer(11) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -86,7 +86,7 @@ CREATE TABLE `Borrow` (
 -- ---
 
 ALTER TABLE `User` ADD FOREIGN KEY (id_role) REFERENCES `Role` (`id`);
-ALTER TABLE `Unit` ADD FOREIGN KEY (id_book) REFERENCES `Book` (`id`);
+ALTER TABLE `Unit` ADD FOREIGN KEY (id_movie) REFERENCES `Movie` (`id`);
 ALTER TABLE `Borrow` ADD FOREIGN KEY (id_unit) REFERENCES `Unit` (`id`);
 ALTER TABLE `Borrow` ADD FOREIGN KEY (id_user) REFERENCES `User` (`id`);
 
@@ -96,6 +96,6 @@ ALTER TABLE `Borrow` ADD FOREIGN KEY (id_user) REFERENCES `User` (`id`);
 
 -- ALTER TABLE `User` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Role` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Book` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Movie` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Unit` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `Borrow` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
