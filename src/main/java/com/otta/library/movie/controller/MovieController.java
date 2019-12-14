@@ -15,7 +15,7 @@ import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.MovieInformation;
 import com.otta.library.movie.model.MovieSearchInformation;
 import com.otta.library.movie.model.MovieShow;
-import com.otta.library.movie.model.pagination.RentedMovieShowPage;
+import com.otta.library.movie.model.RentedMovieShow;
 import com.otta.library.movie.service.BorrowService;
 import com.otta.library.movie.service.MovieService;
 import com.otta.library.pagination.Page;
@@ -64,12 +64,12 @@ public class MovieController {
     }
 
     @GetMapping(path = "/borrow", produces = "application/json")
-    public @ResponseBody ResponseEntity<RentedMovieShowPage> listRentedUnits() {
+    public @ResponseBody ResponseEntity<Page<RentedMovieShow>> listRentedUnits() {
         return ResponseEntity.ok(borrowService.listRentsByLoggedUser(0));
     }
 
     @GetMapping(path = "/borrow/{page}", produces = "application/json")
-    public @ResponseBody ResponseEntity<RentedMovieShowPage> listRentedUnits(@PathVariable(name = "page") int currentPage) {
+    public @ResponseBody ResponseEntity<Page<RentedMovieShow>> listRentedUnits(@PathVariable(name = "page") int currentPage) {
         return ResponseEntity.ok(borrowService.listRentsByLoggedUser(currentPage));
     }
 

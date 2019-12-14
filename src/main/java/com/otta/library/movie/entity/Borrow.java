@@ -27,7 +27,7 @@ public class Borrow {
     @Column(name = "end")
     private Calendar end;
     @Column(name = "id_unit")
-    public long idUnit;
+    private long idUnit;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User user;
