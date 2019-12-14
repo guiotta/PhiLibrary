@@ -14,6 +14,7 @@ import com.otta.library.movie.entity.Borrow;
 import com.otta.library.movie.entity.Movie;
 import com.otta.library.movie.entity.Unit;
 import com.otta.library.movie.model.MovieInformation;
+import com.otta.library.movie.model.MovieSearchInformation;
 import com.otta.library.movie.model.MovieShow;
 import com.otta.library.movie.model.pagination.MovieShowPage;
 import com.otta.library.movie.repository.MovieRepository;
@@ -51,6 +52,26 @@ public class MovieService {
 
     public MovieShowPage listMovies(int currentPage) {
         Page<Movie> moviesPage = movieRepository.findAll(PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
+        Collection<MovieShow> movieShowCollection = new ArrayList<>();
+        for (Movie movie : moviesPage) {
+            // TODO: Componentizar as linhas abaixo.
+            Collection<Unit> unitsByMovie = unitRepository.findByMovie(movie);
+            Collection<Unit> rentedUnitsByMovie = unitRepository.findByMovieAndRented(movie);
+            Collection<Long> unitsId = unitsByMovie.stream()
+                    .filter(unitToFilter -> !rentedUnitsByMovie.contains(unitToFilter))
+                    .map(unit -> unit.getId())
+                    .collect(Collectors.toList());
+
+            movieShowCollection.add(new MovieShow(movie.getId(), movie.getName(), movie.getDirector(), unitsId));
+        }
+        String next = moviesPage.hasNext() ? "http://localhost:8080/api/movie/" + (currentPage + CHANGE_PAGE_OFFSET) : null;
+        String previous = moviesPage.hasPrevious() ? "http://localhost:8080/api/movie/" + (currentPage - CHANGE_PAGE_OFFSET) : null;
+
+        return new MovieShowPage(currentPage, moviesPage.getTotalPages(), moviesPage.getNumberOfElements(), movieShowCollection, next, previous);
+    }
+
+    public MovieShowPage listMovies(MovieSearchInformation movieSearchInformation, int currentPage) {
+        Page<Movie> moviesPage = movieRepository.findByName(movieSearchInformation.getMovieName(), PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
         Collection<MovieShow> movieShowCollection = new ArrayList<>();
         for (Movie movie : moviesPage) {
             // TODO: Componentizar as linhas abaixo.

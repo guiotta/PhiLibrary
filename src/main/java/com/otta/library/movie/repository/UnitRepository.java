@@ -28,7 +28,4 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
 
     @Query("SELECT u FROM Unit u LEFT JOIN u.borrowings b LEFT JOIN b.user WHERE b.user = :user AND b.end IS NULL")
     Page<Unit> findRentedUnitsByUser(@Param("user") User user, Pageable pageable);
-
-    //@Query("SELECT u FROM Unit u LEFT JOIN u.borrowings b LEFT JOIN b.user WHERE u.movie = :movie AND b.end IS NULL")
-    //Collection<Unit> findAllRentedUnitsByMovie(@Param("movie") Movie movie);
 }
