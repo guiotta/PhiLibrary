@@ -8,6 +8,11 @@ import com.otta.library.user.entity.Role;
 import com.otta.library.user.entity.User;
 import com.otta.library.user.model.UserInformation;
 
+/**
+ * Componente para criar um novo {@link User} com os valores passados por {@link UserInformation}, criptografando a senha.
+ * @author Guilherme
+ *
+ */
 @Component
 public class UserFactory {
     private static final int ACTIVE_USER = 1;

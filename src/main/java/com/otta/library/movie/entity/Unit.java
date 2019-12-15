@@ -17,6 +17,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+/**
+ * Entidade mapeando as informações de uma Unidade de um Filme, que serão salvas na base de dados.
+ * @author Guilherme
+ *
+ */
 @Entity
 @Table(name = "Unit")
 public class Unit {

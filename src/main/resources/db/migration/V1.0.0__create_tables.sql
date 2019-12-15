@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `id` integer(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
-  `email` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL UNIQUE,
   `password` varchar(128) NOT NULL,
   `active` integer NOT NULL DEFAULT 1,
   `version` integer(19) NOT NULL DEFAULT 0,
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `Role`;
         
 CREATE TABLE `Role` (
   `id` integer(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(32) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 );
 

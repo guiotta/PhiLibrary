@@ -15,6 +15,11 @@ import javax.persistence.Table;
 
 import com.otta.library.user.entity.User;
 
+/**
+ * Entidade mapeando as informações de um Empréstimo, que serão salvas na base de dados.
+ * @author Guilherme
+ *
+ */
 @Entity
 @Table(name = "Borrow")
 public class Borrow {
@@ -26,6 +31,10 @@ public class Borrow {
     private Calendar begin;
     @Column(name = "end")
     private Calendar end;
+
+    // O mapeamento entre Borrow e Unit foi feito desta forma, para que Borrow possa ser o dono do relacionamento,
+    // permitindo que a versão da Unidade seja incrementada sempre que um Empréstimo for realizado e, assim, garantindo
+    // que a mesma Unidade não seja emprestada em sessões concorrentes.
     @Column(name = "id_unit")
     private long idUnit;
     @ManyToOne(fetch = FetchType.LAZY)

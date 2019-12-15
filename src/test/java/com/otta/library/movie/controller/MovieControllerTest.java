@@ -8,8 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.otta.library.movie.model.BorrowReturnInformation;
-import com.otta.library.movie.model.MovieBorrow;
 import com.otta.library.movie.model.MovieInformation;
 import com.otta.library.movie.model.MovieSearchInformation;
 import com.otta.library.movie.service.BorrowService;
@@ -38,10 +36,6 @@ public class MovieControllerTest {
     private MovieSearchInformation movieSearchInformation;
     @Mock
     private MovieInformation movieInformation;
-    @Mock
-    private MovieBorrow movieBorrow;
-    @Mock
-    private BorrowReturnInformation borrowReturnInformation;
 
     @Test
     public void shouldCallMoviServiceWhenReturnMovies() {
@@ -87,41 +81,4 @@ public class MovieControllerTest {
         // then
         verify(movieService).saveMovie(movieInformation);
     }
-
-    @Test
-    public void shouldCallBorrowServiceWhenBorrowMovie() {
-        // given
-        // when
-        movieController.borrowMovie(movieBorrow);
-        // then
-        verify(borrowService).borrowMovie(movieBorrow);
-    }
-
-    @Test
-    public void shouldCallBorrowServiceWhenListRentedUnits() {
-        // given
-        // when
-        movieController.listRentedUnits();
-        // then
-        verify(borrowService).listRentsByLoggedUser(PageEndpoint.BORROW, PAGE_ZERO);
-    }
-
-    @Test
-    public void shouldCallBorrowServiceWhenListRentedUnitsInt() {
-        // given
-        // when
-        movieController.listRentedUnits(PAGE_ONE);
-        // then
-        verify(borrowService).listRentsByLoggedUser(PageEndpoint.BORROW, PAGE_ONE);
-    }
-
-    @Test
-    public void shouldCallBorrowServiceWhenReturnBorrowMovie() {
-        // given
-        // when
-        movieController.returnBorrowMovie(borrowReturnInformation);
-        // then
-        verify(borrowService).returnMovie(borrowReturnInformation);
-    }
-
 }
