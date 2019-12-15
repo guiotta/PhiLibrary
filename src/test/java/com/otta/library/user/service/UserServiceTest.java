@@ -13,7 +13,6 @@ import java.util.Optional;
 
 import org.assertj.core.util.IterableUtil;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
@@ -29,6 +28,7 @@ import com.otta.library.user.model.UserInformation;
 import com.otta.library.user.model.UserShow;
 import com.otta.library.user.repository.RoleRepository;
 import com.otta.library.user.repository.UserRepository;
+import com.otta.library.user.validation.UserCreationValidator;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -40,6 +40,8 @@ public class UserServiceTest {
     private UserShowMapper userMapper;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private UserCreationValidator userCreationValidator;
     @InjectMocks
     private UserService userService;
 
@@ -58,13 +60,10 @@ public class UserServiceTest {
     @Mock
     private UserShow userShowMappedB;
 
-    @BeforeEach
-    protected void setUp() throws Exception {
-    }
-
     @Test
-    public void shouldCorrectlySaveUser() throws Exception {
+    public void shouldCorrectlySaveUser() {
         // given
+        given(userCreationValidator.validate(userInformation)).willReturn(Boolean.TRUE);
         given(roleRepository.findById(BDDMockito.anyLong())).willReturn(Optional.of(role));
         given(userFactory.create(userInformation, role)).willReturn(user);
         // when
@@ -74,8 +73,9 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldCorrectlyReturnUserInfomation() throws Exception {
+    public void shouldCorrectlyReturnUserInfomation() {
         // given
+        given(userCreationValidator.validate(userInformation)).willReturn(Boolean.TRUE);
         given(roleRepository.findById(BDDMockito.anyLong())).willReturn(Optional.of(role));
         given(userFactory.create(userInformation, role)).willReturn(user);
         // when
@@ -85,8 +85,9 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldThrowsIllegalStateExceptionWhenUserRoleIsNotPresent() throws Exception {
+    public void shouldThrowsIllegalStateExceptionWhenUserRoleIsNotPresent() {
         // given
+        given(userCreationValidator.validate(userInformation)).willReturn(Boolean.TRUE);
         given(roleRepository.findById(BDDMockito.anyLong())).willThrow(new IllegalStateException());
         // when
         Assertions.assertThrows(IllegalStateException.class, () -> {
@@ -96,7 +97,18 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldCorrectlyListAllUsers() throws Exception {
+    public void shouldThrowIllegalArgumentsExceptionWhenUserInformationIsInvalid() {
+     // given
+        given(userCreationValidator.validate(userInformation)).willReturn(Boolean.FALSE);
+        // when
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            userService.saveUser(userInformation);
+        });
+        // then
+    }
+
+    @Test
+    public void shouldCorrectlyListAllUsers() {
         // given
         given(userRepository.findAll()).willReturn(IterableUtil.iterable(userInDatabaseA, userInDatabaseB));
         given(userMapper.map(userInDatabaseA)).willReturn(userShowMappedA);
@@ -108,7 +120,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldCorrectlyListEmptyUsersList() throws Exception {
+    public void shouldCorrectlyListEmptyUsersList() {
         // given
         given(userRepository.findAll()).willReturn(IterableUtil.iterable());
         // when

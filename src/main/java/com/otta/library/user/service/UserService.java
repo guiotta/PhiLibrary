@@ -16,6 +16,7 @@ import com.otta.library.user.model.UserInformation;
 import com.otta.library.user.model.UserShow;
 import com.otta.library.user.repository.RoleRepository;
 import com.otta.library.user.repository.UserRepository;
+import com.otta.library.user.validation.UserCreationValidator;
 
 @Service
 public class UserService {
@@ -25,23 +26,28 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final UserFactory userFactory;
     private final UserShowMapper userMapper;
+    private final UserCreationValidator userCreationValidator;
 
     @Autowired
     public UserService(UserRepository userRepository, RoleRepository roleRepository, UserFactory userFactory,
-            UserShowMapper userMapper) {
+            UserShowMapper userMapper, UserCreationValidator userCreationValidator) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userFactory = userFactory;
         this.userMapper = userMapper;
+        this.userCreationValidator = userCreationValidator;
     }
 
     @Transactional
     public UserInformation saveUser(UserInformation userInformation) {
-        Role role = roleRepository.findById(Long.valueOf(USER_ROLE_ID)).orElseThrow(IllegalStateException::new);
-        User user = userFactory.create(userInformation, role);
+        if (userCreationValidator.validate(userInformation)) {
+            Role role = roleRepository.findById(Long.valueOf(USER_ROLE_ID)).orElseThrow(IllegalStateException::new);
+            User user = userFactory.create(userInformation, role);
 
-        userRepository.save(user);
-        return userInformation;
+            userRepository.save(user);
+            return userInformation;
+        }
+        throw new IllegalArgumentException("User needs a Name, a valid E-mail and a Password with 4-16 characters.");
     }
 
     @Transactional(readOnly = true)
