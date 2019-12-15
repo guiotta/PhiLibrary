@@ -1,0 +1,4 @@
+Usuário : Senha
+user@email.com : userPass
+john@doe.com : johnPassword
+joanne@doe.com : strongPassw0rd
