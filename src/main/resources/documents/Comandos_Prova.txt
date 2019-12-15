@@ -1,0 +1,29 @@
+Logar no Serviço e gravar o cookie gerado :
+curl -k -i -X POST -d username=user@email.com -d password=userPass -c cookies.txt https://localhost:8443/login
+
+Encerrar sessão no Serviço:
+curl -k -i --header "Accept:application/json" -X POST -b cookies.txt https://localhost:8443/logout
+
+Listar usuários:
+curl -k -i --header "Accept:application/json" -X GET -b cookies.txt https://localhost:8443/api/user
+
+Adiciona um novo usuário ao sistema:
+curl -k -i --header "Content-Type:application/json" -X POST -b cookies.txt -d '{"name" : "usuario", "email" : "usuario@email.com", "password" : "123456senha"}' https://localhost:8443/api/user
+
+Adiciona um novo Filme:
+curl -k -i --header "Content-Type:application/json" -X POST -b cookies.txt -d '{"name" : "Liga da Justiça", "director" : "Zack Snider", "units" : 2}' https://localhost:8443/api/movie
+
+Listar os Filmes cadastrados no Sistema:
+curl -k -i --header "Accept:application/json" -X GET -b cookies.txt https://localhost:8443/api/movie
+
+Realiza uma busca no Sistema por um determinado Filme:
+curl -k -i --header "Content-Type:application/json" -X POST -b cookies.txt -d '{"movieName" : "filme"}' https://localhost:8443/api/movie/search
+
+Realiza um aluguel
+curl -k -i --header "Content-Type:application/json" -X POST -b cookies.txt -d '{"idMovie" : 1}' https://localhost:8443/api/borrow
+
+Realizar a devolulção de um filme:
+curl -k -i --header "Content-Type:application/json" -X PUT -b cookies.txt -d '{"borrowId" : 1, "userId" : 1}' https://localhost:8443/api/borrow
+
+Listar os Filmes emprestados para o usuário atual:
+curl -k -i --header "Accept:application/json" -X GET -b cookies.txt https://localhost:8443/api/borrow

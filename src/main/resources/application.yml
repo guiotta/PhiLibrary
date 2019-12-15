@@ -1,0 +1,31 @@
+# Configuração do SSL para o projeto
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/phiTest.p12
+    key-store-password: changeit
+    key-alias: phiTest
+  port: 8443
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/phi_movies?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: false
+    show-sql: true
+  flyway:
+    user: root
+    password: root
+    schemas: phi_movies
+  queries:
+    users-query: select email, password, active from User where email=?
+    roles-query: select u.email, r.name from User u inner join Role r on(u.id_role=r.id) where u.email=?
