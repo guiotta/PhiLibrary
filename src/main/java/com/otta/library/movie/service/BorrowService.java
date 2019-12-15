@@ -19,9 +19,15 @@ import com.otta.library.movie.repository.UnitRepository;
 import com.otta.library.movie.update.UnitBorrowReturnEndSetter;
 import com.otta.library.movie.validator.UserValidator;
 import com.otta.library.pagination.Page;
+import com.otta.library.pagination.model.PageEndpoint;
 import com.otta.library.user.entity.User;
 import com.otta.library.user.factory.LoggedUserFactory;
 
+/**
+ * {@link Service} contendo a lógica para manipular as operações sobre os aluguéis.
+ * @author Guilherme
+ *
+ */
 @Service
 public class BorrowService {
     private static final int DEFAULT_ELEMENTS_QUANTITY = 10;
@@ -52,13 +58,15 @@ public class BorrowService {
 
     @Transactional
     public MovieBorrow borrowMovie(MovieBorrow movieBorrow) {
-        Movie movie = movieRepository.findById(movieBorrow.getIdMovie()).orElseThrow(IllegalArgumentException::new);
+        Movie movie = movieRepository.findById(movieBorrow.getIdMovie())
+                .orElseThrow(() -> new IllegalArgumentException("Could not find Movie for ID "
+                        + movieBorrow.getIdMovie()));
         Unit unit = unitsToRentGetter.get(movie).stream()
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("Could not get Unit to Rent."));
 
         User user = loggedUserFactory.get()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new IllegalStateException("Could not find logged User."));
         unit.addBorrow(borrowFactory.create(user, unit.getId()));
 
         unitRepository.save(unit);
@@ -80,12 +88,12 @@ public class BorrowService {
     }
 
     @Transactional(readOnly = true)
-    public Page<RentedMovieShow> listRentsByLoggedUser(int currentPage) {
+    public Page<RentedMovieShow> listRentsByLoggedUser(PageEndpoint pageEndpoint, int currentPage) {
         User user = loggedUserFactory.get()
                 .orElseThrow(() -> new IllegalStateException("Could not find logged User."));
         org.springframework.data.domain.Page<Unit> unitsPage = unitRepository
                 .findRentedUnitsByUser(user, PageRequest.of(currentPage, DEFAULT_ELEMENTS_QUANTITY));
 
-        return rentedMovieShowPageFactory.create(unitsPage, currentPage);
+        return rentedMovieShowPageFactory.create(unitsPage, pageEndpoint, currentPage);
     }
 }

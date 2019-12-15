@@ -10,6 +10,11 @@ import com.otta.library.movie.entity.Movie;
 import com.otta.library.movie.get.UnitsToRentGetter;
 import com.otta.library.movie.model.MovieShow;
 
+/**
+ * Componente para mapear um {@link Movie} em um {@link MovieShow}.
+ * @author Guilherme
+ *
+ */
 @Component
 public class MovieShowMapper {
     private final UnitsToRentGetter unitsToRentGetter;

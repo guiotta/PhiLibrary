@@ -19,7 +19,13 @@ import com.otta.library.movie.model.RentedMovieShow;
 import com.otta.library.movie.service.BorrowService;
 import com.otta.library.movie.service.MovieService;
 import com.otta.library.pagination.Page;
+import com.otta.library.pagination.model.PageEndpoint;
 
+/**
+ * {@link RestController} para as operações HTTP dos Filmes.
+ * @author Guilherme
+ *
+ */
 @RestController
 @RequestMapping("/api/movie")
 public class MovieController {
@@ -34,23 +40,23 @@ public class MovieController {
 
     @GetMapping(produces = "application/json")
     public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies() {
-        return ResponseEntity.ok(movieService.listMovies(0));
+        return ResponseEntity.ok(movieService.listMovies(PageEndpoint.MOVIE, 0));
     }
 
     @GetMapping(path = "/{page}", produces = "application/json")
     public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@PathVariable(name = "page") int currentPage) {
-        return ResponseEntity.ok(movieService.listMovies(currentPage));
+        return ResponseEntity.ok(movieService.listMovies(PageEndpoint.MOVIE, currentPage));
     }
 
     @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
     public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation) {
-        return ResponseEntity.ok(movieService.listMovies(movieSearchInformation, 0));
+        return ResponseEntity.ok(movieService.listMovies(PageEndpoint.SEARCH, movieSearchInformation, 0));
     }
 
     @PostMapping(path = "/search/{page}", consumes = "application/json", produces = "application/json")
     public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation,
             @PathVariable(name = "page") int currentPage) {
-        return ResponseEntity.ok(movieService.listMovies(movieSearchInformation, currentPage));
+        return ResponseEntity.ok(movieService.listMovies(PageEndpoint.SEARCH, movieSearchInformation, currentPage));
     }
 
     @PostMapping(consumes = "application/json")
@@ -65,12 +71,12 @@ public class MovieController {
 
     @GetMapping(path = "/borrow", produces = "application/json")
     public @ResponseBody ResponseEntity<Page<RentedMovieShow>> listRentedUnits() {
-        return ResponseEntity.ok(borrowService.listRentsByLoggedUser(0));
+        return ResponseEntity.ok(borrowService.listRentsByLoggedUser(PageEndpoint.BORROW, 0));
     }
 
     @GetMapping(path = "/borrow/{page}", produces = "application/json")
     public @ResponseBody ResponseEntity<Page<RentedMovieShow>> listRentedUnits(@PathVariable(name = "page") int currentPage) {
-        return ResponseEntity.ok(borrowService.listRentsByLoggedUser(currentPage));
+        return ResponseEntity.ok(borrowService.listRentsByLoggedUser(PageEndpoint.BORROW, currentPage));
     }
 
     @PostMapping(path = "/return", consumes = "application/json")
