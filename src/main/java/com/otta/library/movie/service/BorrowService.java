@@ -23,6 +23,11 @@ import com.otta.library.pagination.model.PageEndpoint;
 import com.otta.library.user.entity.User;
 import com.otta.library.user.factory.LoggedUserFactory;
 
+/**
+ * {@link Service} contendo a lógica para manipular as operações sobre os aluguéis.
+ * @author Guilherme
+ *
+ */
 @Service
 public class BorrowService {
     private static final int DEFAULT_ELEMENTS_QUANTITY = 10;
