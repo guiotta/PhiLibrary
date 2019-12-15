@@ -1,3 +1,12 @@
+# Configuração do SSL para o projeto
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/phiTest.p12
+    key-store-password: changeit
+    key-alias: phiTest
+  port: 8443
+
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
