@@ -10,7 +10,6 @@ public class MovieBorrow {
     }
 
     public MovieBorrow(long idMovie) {
-        super();
         this.idMovie = idMovie;
     }
 

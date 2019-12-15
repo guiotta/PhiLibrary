@@ -41,7 +41,7 @@ public class MovieControllerTest {
     public void shouldCallMoviServiceWhenReturnMovies() {
         // given
         // when
-        movieController.returnMovies();
+        movieController.listMovies();
         // then
         verify(movieService).listMovies(PageEndpoint.MOVIE, PAGE_ZERO);
     }
@@ -50,7 +50,7 @@ public class MovieControllerTest {
     public void shouldCallMoviServiceWhenReturnMoviesInt() {
         // given
         // when
-        movieController.returnMovies(PAGE_ONE);
+        movieController.listMovies(PAGE_ONE);
         // then
         verify(movieService).listMovies(PageEndpoint.MOVIE, PAGE_ONE);
     }
@@ -59,7 +59,7 @@ public class MovieControllerTest {
     public void shouldCallMoviServiceWhenReturnMoviesMovieSearchInformation() {
         // given
         // when
-        movieController.returnMovies(movieSearchInformation);
+        movieController.searchMovies(movieSearchInformation);
         // then
         verify(movieService).listMovies(PageEndpoint.SEARCH, movieSearchInformation, PAGE_ZERO);
     }
@@ -68,7 +68,7 @@ public class MovieControllerTest {
     public void shouldCallMoviServiceWhenReturnMoviesMovieSearchInformationInt() {
         // given
         // when
-        movieController.returnMovies(movieSearchInformation, PAGE_ONE);
+        movieController.searchMovies(movieSearchInformation, PAGE_ONE);
         // then
         verify(movieService).listMovies(PageEndpoint.SEARCH, movieSearchInformation, PAGE_ONE);
     }

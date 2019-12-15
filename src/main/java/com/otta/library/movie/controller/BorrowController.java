@@ -34,11 +34,6 @@ public class BorrowController {
         this.borrowService = borrowService;
     }
 
-    @PostMapping(consumes = "application/json")
-    public @ResponseBody ResponseEntity<MovieBorrow> borrowMovie(@RequestBody MovieBorrow movieBorrow) {
-        return ResponseEntity.ok(borrowService.borrowMovie(movieBorrow));
-    }
-
     @GetMapping(produces = "application/json")
     public @ResponseBody ResponseEntity<Page<RentedMovieShow>> listRentedUnits() {
         return ResponseEntity.ok(borrowService.listRentsByLoggedUser(PageEndpoint.BORROW, 0));
@@ -48,6 +43,11 @@ public class BorrowController {
     public @ResponseBody ResponseEntity<Page<RentedMovieShow>> listRentedUnits(
             @PathVariable(name = "page") int currentPage) {
         return ResponseEntity.ok(borrowService.listRentsByLoggedUser(PageEndpoint.BORROW, currentPage));
+    }
+
+    @PostMapping(consumes = "application/json")
+    public @ResponseBody ResponseEntity<MovieBorrow> borrowMovie(@RequestBody MovieBorrow movieBorrow) {
+        return ResponseEntity.ok(borrowService.borrowMovie(movieBorrow));
     }
 
     @PutMapping(consumes = "application/json")

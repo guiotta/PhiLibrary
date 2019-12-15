@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "User")
@@ -20,10 +21,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "name")
     private String name;
+    @NotBlank(message = "E-mail is mandatory")
     @Column(name = "email")
     private String email;
+    @NotBlank(message = "Password is mandatory")
     @Column(name = "password")
     private String password;
     @Column(name = "active")

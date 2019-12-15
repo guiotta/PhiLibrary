@@ -1,0 +1,334 @@
+Criação de Usuário - Cria um usuário para acessar o sistema.
+/POST /api/user
+Corpo da requisição:
+{
+	"title" : "UserInformation",
+	"type" : "object",
+	"properties" : {
+		"name" : { "type" : "string" },
+		"email" : { "type" : "string" },
+		"password : { "type" : "string" }"
+	},
+	"required" : [ "name", "email", "password" ]
+}
+Corpo da resposta:
+{
+	"title" : "UserInformation",
+	"type" : "object",
+	"properties" : {
+		"name" : { "type" : "string" },
+		"email" : { "type" : "string" },
+		"password : { "type" : "string" }"
+	},
+	"required" : [ "name", "email", "password" ]
+}
+
+Listagem de Usuários - Lista os usuários criados na base de dados.
+/GET /api/user
+Corpo da resposta:
+{
+	"title" : "UserShow",
+	"type" : "object",
+	"properties" : {
+		"name" : { "type" : "string" },
+		"email" : { "type" : "string" }
+	},
+	"required" : [ ]
+}
+
+Listagem do Filmes - Lista os filmes criados na base de dados.
+/GET /api/movie
+Corpo da resposta:
+{
+	"title" : "Page",
+	"type" : "object",
+	"properties" : {
+		"currentPage" : "number",
+		"totalPages" : "number",
+		"elementsInPage" : "number",
+		"content" :  {
+			"type" : "array",
+			"items" : {
+				"type" : "object",
+				"properties" : {
+					"title" : "MovieShow",
+					"type" : "object",
+					"properties" : {
+						"movieId" : { "type" : "numeric" },
+						"movieName" : { "type" : "string" },
+						"movieDirector" : { "type" : "string" }
+						"freeUnits" : {
+							"type" : "array",
+							"items" : { "type" : "number" }
+						}
+					},
+					"required" : [ ]
+				}
+			}
+		},
+		"next" : "string",
+		"previous" : "string"
+	},
+	"required" : [ ]
+}
+
+Listagem do Filmes - Lista os filmes criados na base de dados, buscando por uma página específica na busca.
+/GET /api/movie/{:page}
+Corpo da resposta:
+{
+	"title" : "Page",
+	"type" : "object",
+	"properties" : {
+		"currentPage" : "number",
+		"totalPages" : "number",
+		"elementsInPage" : "number",
+		"content" :  {
+			"type" : "array",
+			"items" : {
+				"type" : "object",
+				"properties" : {
+					"title" : "MovieShow",
+					"type" : "object",
+					"properties" : {
+						"movieId" : { "type" : "numeric" },
+						"movieName" : { "type" : "string" },
+						"movieDirector" : { "type" : "string" }
+						"freeUnits" : {
+							"type" : "array",
+							"items" : { "type" : "number" }
+						}
+					},
+					"required" : [ ]
+				}
+			}
+		},
+		"next" : "string",
+		"previous" : "string"
+	},
+	"required" : [ ]
+}
+
+Busca por filme específico - Lista os filmes criados na base de dados que tiverem o nome com o paramêtro pesquisado.
+/GET /api/movie/search
+Corpo da requisição:
+{
+	"title" : "movieName",
+	"type" : "object",
+	"properties" : {
+		"movieName" : "string"
+	},
+	"required" : [ ]
+}
+Corpo da resposta:
+{
+	"title" : "Page",
+	"type" : "object",
+	"properties" : {
+		"currentPage" : "number",
+		"totalPages" : "number",
+		"elementsInPage" : "number",
+		"content" :  {
+			"type" : "array",
+			"items" : {
+				"type" : "object",
+				"properties" : {
+					"title" : "MovieShow",
+					"type" : "object",
+					"properties" : {
+						"movieId" : { "type" : "numeric" },
+						"movieName" : { "type" : "string" },
+						"movieDirector" : { "type" : "string" }
+						"freeUnits" : {
+							"type" : "array",
+							"items" : { "type" : "number" }
+						}
+					},
+					"required" : [ ]
+				}
+			}
+		},
+		"next" : "string",
+		"previous" : "string"
+	},
+	"required" : [ ]
+}
+
+Busca por filme específico - Lista os filmes criados na base de dados que tiverem o nome com o paramêtro pesquisado, buscando por uma página específica na busca.
+/GET /api/movie/search/{:page}
+Corpo da requisição:
+{
+	"title" : "movieName",
+	"type" : "object",
+	"properties" : {
+		"movieName" : "string"
+	},
+	"required" : [ ]
+}
+Corpo da resposta:
+{
+	"title" : "Page",
+	"type" : "object",
+	"properties" : {
+		"currentPage" : "number",
+		"totalPages" : "number",
+		"elementsInPage" : "number",
+		"content" :  {
+			"type" : "array",
+			"items" : {
+				"type" : "object",
+				"properties" : {
+					"title" : "MovieShow",
+					"type" : "object",
+					"properties" : {
+						"movieId" : { "type" : "numeric" },
+						"movieName" : { "type" : "string" },
+						"movieDirector" : { "type" : "string" }
+						"freeUnits" : {
+							"type" : "array",
+							"items" : { "type" : "number" }
+						}
+					},
+					"required" : [ ]
+				}
+			}
+		},
+		"next" : "string",
+		"previous" : "string"
+	},
+	"required" : [ ]
+}
+
+Criação de Filmes - Cria um filme para ser alugado, junto com as suas unidades.
+/POST /api/movie
+Corpo da requisição:
+{
+	"title" : "MovieInformation",
+	"type" : "object",
+	"properties" : {
+		"name" : { "type" : "string" },
+		"director" : { "type" : "string" },
+		"units" : { "type" : "number" }
+	},
+	"required" : [ "name" ]
+}
+Corpo da resposta:
+{
+	"title" : "MovieInformation",
+	"type" : "object",
+	"properties" : {
+		"name" : { "type" : "string" },
+		"director" : { "type" : "string" },
+		"units" : { "type" : "number" }
+	},
+	"required" : [ "name" ]
+}
+
+Listagem dos Empréstimos - Lista os emprétimos criados na base de dados.
+/GET /api/borrow
+Corpo da resposta:
+{
+	"title" : "Page",
+	"type" : "object",
+	"properties" : {
+		"currentPage" : "number",
+		"totalPages" : "number",
+		"elementsInPage" : "number",
+		"content" :  {
+			"type" : "array",
+			"items" : {
+				"type" : "object",
+				"properties" : {
+					"title" : "RentedMovieShow",
+					"type" : "object",
+					"properties" : {
+						"movieId" : "number",
+						"movieName" : "string",
+						"unitId" : "number",
+						"borrowId" : "number"
+					},
+					"required" : [ ]
+				}
+			}
+		},
+		"next" : "string",
+		"previous" : "string"
+	},
+	"required" : [ ]
+}
+
+Listagem dos Empréstimos - Lista os emprétimos criados na base de dados, buscando por uma página específica na busca.
+/GET /api/borrow/{:page}
+Corpo da resposta:
+{
+	"title" : "Page",
+	"type" : "object",
+	"properties" : {
+		"currentPage" : "number",
+		"totalPages" : "number",
+		"elementsInPage" : "number",
+		"content" :  {
+			"type" : "array",
+			"items" : {
+				"type" : "object",
+				"properties" : {
+					"title" : "RentedMovieShow",
+					"type" : "object",
+					"properties" : {
+						"movieId" : "number",
+						"movieName" : "string",
+						"unitId" : "number",
+						"borrowId" : "number"
+					},
+					"required" : [ ]
+				}
+			}
+		},
+		"next" : "string",
+		"previous" : "string"
+	},
+	"required" : [ ]
+}
+
+Realização de Empréstimo - Cria um empréstimo para o usuário logado para um filme.
+/POST /api/borrow
+Corpo da requisição:
+{
+	"title" : "MovieBorrow"
+	"type" : "object",
+	"properties" : {
+		"idMovie" : "number"
+	},
+	"required" : [ ]
+}
+Corpo da resposta:
+{
+	"title" : "MovieBorrow"
+	"type" : "object",
+	"properties" : {
+		"idMovie" : "number"
+	},
+	"required" : [ ]
+}
+
+Retorna um Empréstimo - Altera o valor de empréstimo para sinalizar que o filme foi devolvido.
+/PUT /api/borrow
+Corpo da requisição:
+{
+	"title" : "BorrowReturnInformation",
+	"type" : "object",
+	"properties" : {
+		"borrowId" : "number",
+		"userId" : "number"
+	},
+	"required" : [ ]	
+}
+Corpo da resposta:
+{
+	"title" : "BorrowReturnInformation",
+	"type" : "object",
+	"properties" : {
+		"borrowId" : "number",
+		"userId" : "number"
+	},
+	"required" : [ ]	
+}

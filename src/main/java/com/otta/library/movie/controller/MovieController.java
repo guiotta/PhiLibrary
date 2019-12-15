@@ -33,22 +33,22 @@ public class MovieController {
     }
 
     @GetMapping(produces = "application/json")
-    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies() {
+    public @ResponseBody ResponseEntity<Page<MovieShow>> listMovies() {
         return ResponseEntity.ok(movieService.listMovies(PageEndpoint.MOVIE, 0));
     }
 
     @GetMapping(path = "/{page}", produces = "application/json")
-    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@PathVariable(name = "page") int currentPage) {
+    public @ResponseBody ResponseEntity<Page<MovieShow>> listMovies(@PathVariable(name = "page") int currentPage) {
         return ResponseEntity.ok(movieService.listMovies(PageEndpoint.MOVIE, currentPage));
     }
 
     @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
-    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(@RequestBody MovieSearchInformation movieSearchInformation) {
+    public @ResponseBody ResponseEntity<Page<MovieShow>> searchMovies(@RequestBody MovieSearchInformation movieSearchInformation) {
         return ResponseEntity.ok(movieService.listMovies(PageEndpoint.SEARCH, movieSearchInformation, 0));
     }
 
     @PostMapping(path = "/search/{page}", consumes = "application/json", produces = "application/json")
-    public @ResponseBody ResponseEntity<Page<MovieShow>> returnMovies(
+    public @ResponseBody ResponseEntity<Page<MovieShow>> searchMovies(
             @RequestBody MovieSearchInformation movieSearchInformation, @PathVariable(name = "page") int currentPage) {
         return ResponseEntity.ok(movieService.listMovies(PageEndpoint.SEARCH, movieSearchInformation, currentPage));
     }

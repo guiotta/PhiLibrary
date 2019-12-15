@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Entidade mapeando as informações de um Filme, que serão salvas na base de dados.
@@ -26,6 +27,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @NotBlank(message = "Name is mandatory")
     @Column(name = "name")
     private String name;
     @Column(name = "director")

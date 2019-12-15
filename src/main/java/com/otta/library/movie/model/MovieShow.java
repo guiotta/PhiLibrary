@@ -8,17 +8,17 @@ public class MovieShow {
     private long movieId;
     private String movieName;
     private String movieDirector;
-    private Collection<Long> unitsFrees = new ArrayList<>();
+    private Collection<Long> freeUnits = new ArrayList<>();
 
     public MovieShow() {
-        unitsFrees = new ArrayList<>();
+        freeUnits = new ArrayList<>();
     }
 
-    public MovieShow(long movieId, String movieName, String movieDirector, Collection<Long> unitsFrees) {
+    public MovieShow(long movieId, String movieName, String movieDirector, Collection<Long> freeUnits) {
         this.movieId = movieId;
         this.movieName = movieName;
         this.movieDirector = movieDirector;
-        this.unitsFrees = unitsFrees;
+        this.freeUnits = freeUnits;
     }
 
     public long getMovieId() {
@@ -45,25 +45,25 @@ public class MovieShow {
         this.movieDirector = movieDirector;
     }
 
-    public Collection<Long> getUnitsFrees() {
-        return unitsFrees;
+    public Collection<Long> getFreeUnits() {
+        return freeUnits;
     }
 
-    public void setUnitsFrees(Collection<Long> unitsFrees) {
-        this.unitsFrees = unitsFrees;
+    public void setFreeUnits(Collection<Long> unitsFrees) {
+        this.freeUnits = unitsFrees;
     }
 
-    public void addUnitFree(Long unitId) {
-        this.unitsFrees.add(unitId);
+    public void addFreeUnit(Long unitId) {
+        this.freeUnits.add(unitId);
     }
 
     public void addAllUnitFree(Collection<Long> unitIdCollection) {
-        this.unitsFrees.addAll(unitIdCollection);
+        this.freeUnits.addAll(unitIdCollection);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieDirector, movieId, movieName, unitsFrees);
+        return Objects.hash(movieDirector, movieId, movieName, freeUnits);
     }
 
     @Override
@@ -76,6 +76,6 @@ public class MovieShow {
         }
         MovieShow other = (MovieShow) obj;
         return Objects.equals(movieDirector, other.movieDirector) && movieId == other.movieId
-                && Objects.equals(movieName, other.movieName) && Objects.equals(unitsFrees, other.unitsFrees);
+                && Objects.equals(movieName, other.movieName) && Objects.equals(freeUnits, other.freeUnits);
     }
 }

@@ -92,7 +92,7 @@ public class MovieShowMapperTest {
         // when
         MovieShow actualValue = movieShowMapper.map(movie);
         // then
-        assertThat(actualValue.getUnitsFrees(), Matchers.containsInAnyOrder(UNIT_A_ID, UNIT_B_ID));
+        assertThat(actualValue.getFreeUnits(), Matchers.containsInAnyOrder(UNIT_A_ID, UNIT_B_ID));
     }
 
     @Test
@@ -102,6 +102,6 @@ public class MovieShowMapperTest {
         // when
         MovieShow actualValue = movieShowMapper.map(movie);
         // then
-        assertThat(actualValue.getUnitsFrees(), empty());
+        assertThat(actualValue.getFreeUnits(), empty());
     }
 }
