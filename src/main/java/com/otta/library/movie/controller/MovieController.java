@@ -21,6 +21,11 @@ import com.otta.library.movie.service.MovieService;
 import com.otta.library.pagination.Page;
 import com.otta.library.pagination.model.PageEndpoint;
 
+/**
+ * {@link RestController} para as operações HTTP dos Filmes.
+ * @author Guilherme
+ *
+ */
 @RestController
 @RequestMapping("/api/movie")
 public class MovieController {

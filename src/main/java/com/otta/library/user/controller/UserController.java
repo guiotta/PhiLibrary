@@ -15,6 +15,11 @@ import com.otta.library.user.model.UserInformation;
 import com.otta.library.user.model.UserShow;
 import com.otta.library.user.service.UserService;
 
+/**
+ * {@link RestController} para as operações HTTP de Usuários.
+ * @author Guilherme
+ *
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
