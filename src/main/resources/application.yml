@@ -10,7 +10,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/phi_library?useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/phi_movies?useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: root
   jpa:
@@ -25,7 +25,7 @@ spring:
   flyway:
     user: root
     password: root
-    schemas: phi_library
+    schemas: phi_movies
   queries:
     users-query: select email, password, active from User where email=?
     roles-query: select u.email, r.name from User u inner join Role r on(u.id_role=r.id) where u.email=?
