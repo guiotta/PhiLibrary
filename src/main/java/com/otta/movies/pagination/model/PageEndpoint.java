@@ -9,7 +9,7 @@ package com.otta.movies.pagination.model;
 public enum PageEndpoint {
     MOVIE(1, "/api/movie/"),
     SEARCH(2, "/api/movie/search/"),
-    BORROW(3, "/api/movie/borrow/");
+    BORROW(3, "/api/borrow/");
 
     private int id;
     private String specificUrl;
